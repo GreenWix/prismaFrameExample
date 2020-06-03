@@ -1,7 +1,8 @@
 ## prismaFrameExample
 
-Данный репозиторий - пример проекта, использующего [prismaFrame](https://github.com/GreenWix/prismaFrame). 
-Вы можете его использовать как шаблон для своих проектов, использующих [prismaFrame](https://github.com/GreenWix/prismaFrame).
+Данный репозиторий - пример проекта, использующего [prismaFrame](https://github.com/GreenWix/prismaFrame)
+
+Вы можете его использовать как шаблон для своих проектов, использующих [prismaFrame](https://github.com/GreenWix/prismaFrame)
 
 ## Установка
 
@@ -16,7 +17,7 @@ composer update
 ```shell script
 ./rr serve -v -d 
 ```
-По дефолту запустится на 0.0.0.0:8080 (порт можно настроить в ```.rr.yaml```)
+По умолчанию roadrunner запустится на 0.0.0.0:8080 (порт можно настроить в ```.rr.yaml```)
 
 Для проверки примера можете перейти на http://127.0.0.1:8080/test.rar?v=0.0.1&da=1&db=2
 
@@ -26,7 +27,7 @@ composer update
 
 ## Как изменить namespace?
 
-Изменить namespace можно, изменив в ```composer.json``` имя поля ```"example\\"``` на ваше значение (не забудьте также у файлов, лежащих в src заменить namespace)
+Изменить namespace можно, изменив в ```composer.json``` имя поля ```"example\\"``` на ваше значение (не забудьте также у файлов, лежащих в src, заменить namespace)
 ```json
 {
   "example\\": "src/"
