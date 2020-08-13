@@ -8,12 +8,12 @@ use example\user\UserNickname;
 use example\user\UserToken;
 use GreenWix\prismaFrame\controller\Controller;
 
-class TestController extends Controller
+class UserController extends Controller
 {
 
 	public function getName(): string
 	{
-		return "test";
+		return "user";
 	}
 
 	/**
