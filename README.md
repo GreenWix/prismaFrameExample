@@ -1,10 +1,8 @@
 ## prismaFrameExample
 
-Данный репозиторий - пример проекта, использующего [prismaFrame](https://github.com/GreenWix/prismaFrame)
+Данный репозиторий - пример проекта, использующего [prismaFrame 0.2.1](https://github.com/GreenWix/prismaFrame/releases/tag/v0.2.1)
 
 Вы можете его использовать как шаблон для своих проектов, использующих [prismaFrame](https://github.com/GreenWix/prismaFrame)
-
-prismaFrameExample использует [prismaFrame 0.2.1](https://github.com/GreenWix/prismaFrame/releases/tag/v0.2.1)
 
 ![](https://sun9-62.userapi.com/7EiEbFv__8-aj7fPLSeFxmMp3YOv9QkuwvrnsA/IeJQXrmqlvY.jpg)
 
