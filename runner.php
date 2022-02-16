@@ -1,41 +1,51 @@
 <?php
 
-use example\security\Security;
-use example\user\UserNickname;
-use example\user\UserToken;
-use GreenWix\prismaFrame\error\HTTPCodes;
+use example\event\MyEventsHandler;
+use example\validator\UserNicknameValidator;
+use example\validator\UserTokenValidator;
 use Laminas\Diactoros\Response\JsonResponse;
-use example\controller\UserController;
-use GreenWix\prismaFrame\error\internal\InternalErrorException;
+use example\controller\MessagesController;
 use GreenWix\prismaFrame\PrismaFrame;
 use GreenWix\prismaFrame\settings\PrismaFrameSettings;
-use GreenWix\prismaFrame\error\Error;
+
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Spiral\RoadRunner\Worker;
+use Spiral\RoadRunner\Http\PSR7Worker;
 
 ini_set('display_errors', 'stderr');
 include "vendor/autoload.php";
 
-$relay = new Spiral\Goridge\StreamRelay(STDIN, STDOUT);
-$psr7 = new Spiral\RoadRunner\PSR7Client(new Spiral\RoadRunner\Worker($relay));
+//region init worker
+$worker = Worker::create();
+$factory = new Psr17Factory();
+$psr7 = new PSR7Worker($worker, $factory, $factory, $factory);
+//endregion
 
-PrismaFrame::init(new PrismaFrameSettings(true, "0.0.1"));
+//region init prismaFrame
+$settings = new PrismaFrameSettings(true, "0.0.1");
+$eventsHandler = new MyEventsHandler();
+$logger = $worker->getLogger();
+$prismaFrame = new PrismaFrame($settings, $eventsHandler, $logger);
 
-PrismaFrame::addSupportedType(new UserToken());
-PrismaFrame::addSupportedType(new UserNickname());
+$prismaFrame->addTypeValidator(new UserTokenValidator());
+$prismaFrame->addTypeValidator(new UserNicknameValidator());
 
-PrismaFrame::addController(new UserController());
+$prismaFrame->addController(new MessagesController());
 
-PrismaFrame::setSecurity(Security::class);
+$prismaFrame->start();
 
-PrismaFrame::start();
+//endregion
 
-while ($req = $psr7->acceptRequest()) {
+while (true) {
 	try {
+		$request = $psr7->waitRequest();
 
-		$resp = PrismaFrame::handle($req);
+		$resp = $prismaFrame->handleRequest($request);
 		$response = new JsonResponse($resp->response, $resp->httpCode, [], JSON_UNESCAPED_UNICODE);
 
 		$psr7->respond($response);
+
 	} catch (Throwable $e) {
-		$psr7->getWorker()->error((string)$e);
+		$worker->error((string)$e);
 	}
 }

@@ -8,10 +8,11 @@
         }
     ],
     "require": {
-        "spiral/roadrunner": "^1.8",
+        "spiral/roadrunner": "^2.1.5",
         "ext-json": "*",
-        "greenwix/prismaframe": "^0.2.1",
-        "ext-mysqli": "*"
+        "greenwix/prismaframe": "^1.0.1",
+        "ext-mysqli": "*",
+        "nyholm/psr7": "^1.5"
     },
     "autoload": {
         "psr-4": {
