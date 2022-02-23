@@ -10,13 +10,15 @@
     "require": {
         "spiral/roadrunner": "^2.1.5",
         "ext-json": "*",
-        "greenwix/prismaframe": "^1.0.1",
+        "greenwix/prismaframe": "^1.0.2",
         "ext-mysqli": "*",
-        "nyholm/psr7": "^1.5"
+        "nyholm/psr7": "^1.5",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
-            "example\\": "src/"
+            "example\\": "src/",
+            "example\\tests\\": "tests/"
         }
     }
 }

@@ -7,8 +7,7 @@ namespace example\validator;
 
 
 use example\user\UserToken;
-use GreenWix\prismaFrame\error\runtime\RuntimeError;
-use GreenWix\prismaFrame\error\runtime\RuntimeErrorException;
+use example\validator\exception\WrongTokenException;
 use GreenWix\prismaFrame\type\TypeValidator;
 
 class UserTokenValidator extends TypeValidator {
@@ -22,13 +21,13 @@ class UserTokenValidator extends TypeValidator {
 	}
 
 	/**
-	 * @throws RuntimeErrorException
+	 * @throws WrongTokenException
 	 */
 	public function validateAndGetValue(string $input, array $extraData): UserToken {
 		$isTokenValid = $input === "some_token";
 
 		if(!$isTokenValid){
-			throw RuntimeError::BAD_VALIDATION_RESULT("Wrong token");
+			throw new WrongTokenException("Wrong token");
 		}
 
 		return new UserToken($input);

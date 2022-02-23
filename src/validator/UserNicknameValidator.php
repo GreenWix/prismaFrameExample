@@ -7,8 +7,8 @@ namespace example\validator;
 
 
 use example\user\UserNickname;
-use GreenWix\prismaFrame\error\runtime\RuntimeError;
-use GreenWix\prismaFrame\error\runtime\RuntimeErrorException;
+use example\validator\exception\UserDoesNotExistException;
+use example\validator\exception\WrongNicknameException;
 use GreenWix\prismaFrame\type\TypeValidator;
 
 class UserNicknameValidator extends TypeValidator {
@@ -21,12 +21,9 @@ class UserNicknameValidator extends TypeValidator {
 		return true;
 	}
 
-	/**
-	 * @throws RuntimeErrorException
-	 */
 	public function validateAndGetValue(string $input, array $extraData): UserNickname {
 		if(preg_match("/[^A-Za-z0-9_ ]/", $input) !== 0){
-			throw RuntimeError::BAD_VALIDATION_RESULT("Nickname \"$input\" can't exists");
+			throw new WrongNicknameException("Nickname \"$input\" can't exists");
 		}
 
 		// ...some checks
@@ -35,7 +32,7 @@ class UserNicknameValidator extends TypeValidator {
 
 		$exists = in_array($input, $existingNicknames, true);
 		if(!$exists){
-			throw RuntimeError::BAD_VALIDATION_RESULT("Nickname \"$input\" does not exists");
+			throw new UserDoesNotExistException("Nickname \"$input\" does not exists");
 		}
 
 		return new UserNickname($input);
